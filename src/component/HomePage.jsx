@@ -28,10 +28,10 @@ import { useState } from 'react';
                 placeholder="Search movies..."
                  value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="pl-10 pr-4 py-2 w-[20vw] bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
-            <button className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700">
+            <button className="p-2 hidden md:block rounded-lg bg-gray-800 hover:bg-gray-700">
               <User className="w-5 h-5" />
             </button>
           </div>
