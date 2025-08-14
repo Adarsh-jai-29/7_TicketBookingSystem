@@ -9,10 +9,12 @@ export const AppStateProvider = ({ children }) => {
   const [selectedShowtime, setSelectedShowtime] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [bookingData, setBookingData] = useState({});
+  const [bookedSeats, setBookedSeats] = useState([]);
+
 
   return (
     <AppStateContext.Provider value={{currentPage, setCurrentPage,selectedMovie, setSelectedMovie, selectedShowtime, setSelectedShowtime, 
-      selectedSeats, setSelectedSeats, bookingData, setBookingData}}>
+      selectedSeats, setSelectedSeats, bookingData, setBookingData,bookedSeats, setBookedSeats}}>
       {children}
     </AppStateContext.Provider>
   );

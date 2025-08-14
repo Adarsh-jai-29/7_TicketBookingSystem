@@ -1,9 +1,17 @@
 import { Search, User, Star } from 'lucide-react';
 import { useAppState } from '../state';
 import { movies } from '../data/movies';
+import { useState } from 'react';
 
  export const HomePage = () => {
-  const { setCurrentPage, setSelectedMovie, } = useAppState();
+  const { setCurrentPage, setSelectedMovie } = useAppState();
+  
+  const [searchTerm, setSearchTerm] = useState('');
+
+   const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    movie.genre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -18,6 +26,8 @@ import { movies } from '../data/movies';
               <input
                 type="text"
                 placeholder="Search movies..."
+                 value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
               />
             </div>
@@ -44,7 +54,7 @@ import { movies } from '../data/movies';
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold mb-8 text-center">Now Showing</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {movies.map(movie => (
+            {filteredMovies.map(movie => (
               <div key={movie.id} className="bg-gray-700 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-transform cursor-pointer">
                 <img src={movie.image} alt={movie.title} className="w-full h-64 object-cover" />
                 <div className="p-4">

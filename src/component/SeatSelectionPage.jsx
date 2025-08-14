@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useAppState } from '../state';
 
 
   export const SeatSelectionPage = () => {
+ const { setCurrentPage, selectedMovie, selectedSeats, selectedShowtime, setSelectedSeats, bookingData, setBookingData,bookedSeats,setBookedSeats } = useAppState();
 
+   useEffect(() => {
+     if (selectedShowtime) {
+      // Generate random booked seats ONLY ONCE
+       const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const seatsPerRow = 12;
+      const booked = [];
+      rows.forEach(row => {
+        for (let i = 1; i <= seatsPerRow; i++) {
+          const seatId = `${row}${i}`;
+          if (Math.random() < 0.2) {  // Only runs once per showtime
+            booked.push(seatId);
+          }
+        }
+      });
+      setBookedSeats(booked);  // Store permanently
+    }
+  }, [selectedShowtime]);
+      
      // Generate seat layout
  const generateSeats = () => {
     const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const seatsPerRow = 12;
     const seats = [];
-    
+
     rows.forEach(row => {
       for (let i = 1; i <= seatsPerRow; i++) {
         const seatId = `${row}${i}`;
-        const isBooked = Math.random() < 0.2; // 20% chance of being booked
+        const isBooked = bookedSeats.includes(seatId);
         seats.push({
           id: seatId,
           row: row,
@@ -38,7 +57,6 @@ import { useAppState } from '../state';
     };
     
 
-    const { setCurrentPage, selectedMovie, selectedSeats, selectedShowtime, setSelectedSeats, bookingData, setBookingData } = useAppState();
     const seats = generateSeats();
     const totalPrice = selectedSeats.length * selectedShowtime.price;
 
